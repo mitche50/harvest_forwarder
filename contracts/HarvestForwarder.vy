@@ -49,6 +49,7 @@ def __init__(
     self.badger_tree = _tree
 
 
+@nonreentrant('distribute')
 @external
 def distribute(
     _token: address,
@@ -95,6 +96,7 @@ def set_owner(_address: address):
     log OwnerUpdate(current_owner, self.owner)
 
 
+@nonreentrant('sweep')
 @external
 def sweep(_token: address):
     """
