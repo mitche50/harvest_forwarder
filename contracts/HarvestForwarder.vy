@@ -19,6 +19,10 @@ event TreeUpdate:
     old_tree: address
     new_tree: address
 
+event OwnerUpdate:
+    old_owner: address
+    new_owner: address
+
 event Sweep:
     _token: address
     balance_before: uint256
@@ -26,6 +30,7 @@ event Sweep:
 
 owner: public(address)
 badger_tree: public(address)
+
 
 @external
 def __init__(
@@ -74,6 +79,20 @@ def set_tree(_address: address):
     self.badger_tree = _address
 
     log TreeUpdate(current_tree, self.badger_tree)
+
+
+@external
+def set_owner(_address: address):
+    """
+    @notice Update the owner of the contract
+    @param _address Address of the new owner
+    """
+    assert msg.sender == self.owner, "!owner" # def: only owner
+
+    current_owner: address = self.owner
+    self.owner = _address
+
+    log OwnerUpdate(current_owner, self.owner)
 
 
 @external
